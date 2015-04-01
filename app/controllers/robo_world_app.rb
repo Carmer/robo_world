@@ -36,4 +36,10 @@ class RoboWorldApp < Sinatra::Base
     RobotManager.update(id.to_i, params[:robot])
     redirect '/robots'
   end
+
+  delete '/robots/:id' do |id|
+    RobotManager.destroy(id.to_i)
+    redirect '/'
+  end
+
 end

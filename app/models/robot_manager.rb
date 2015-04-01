@@ -46,4 +46,10 @@ class RobotManager
       to_change["department"] =  robot[:department]
     end
   end
+
+  def self.destroy(id)
+    robo_database.transaction do
+      target = robo_database['robots'].delete_if { |robot| robot["id"] == id }
+    end
+  end
 end
