@@ -1,7 +1,7 @@
 require 'YAML/store'
 require_relative "robot"
 
-class RobotMaster
+class RobotManager
 
   def self.create(robot)
     robo_database.transaction do
@@ -13,7 +13,7 @@ class RobotMaster
   end
 
   def self.robot_info(id)
-    robots_info.find { |robot| robot.["id"] == id }
+    robots_info.find { |robot| robot["id"] == id }
   end
 
   def self.find(id)
@@ -21,7 +21,7 @@ class RobotMaster
   end
 
   def self.robo_database
-    @robo_database ||= YAML::Store.new("db/robo_master")
+    @robo_database ||= YAML::Store.new("db/robo_manager")
   end
 
   def self.robots_info
@@ -32,5 +32,18 @@ class RobotMaster
 
   def self.all
     robots_info.map { |info| Robot.new(info) }
+  end
+
+  def self.update(id, robot)
+    robo_database.transaction do
+      to_change = robo_database['robots'].find { |robot| robot["id"] == id }
+      to_change["name"] = robot[:name]
+      to_change["city"] = robot[:city]
+      to_change["state"] = robot[:state]
+      to_change["avatar"] = robot[:avatar]
+      to_change["birthday"] = robot[:dob]
+      to_change["date_hired"] = robot[:date_hired]
+      to_change["department"] =  robot[:department]
+    end
   end
 end

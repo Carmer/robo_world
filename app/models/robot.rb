@@ -1,13 +1,14 @@
 class Robot
-  attr_reader :name, :id, :avatar
-  
-  def initialize(data)
-    @id = data["id"]
-    @name = data["name"]
-    @city = data["city"]
-    @state = data["state"]
-    @avatar = data["avatar"]
-    @birthday = data["birthday"]
-    @date_hired = data["date_hired"]
+  attr_reader :name, :id, :avatar, :city, :state, :birthday, :date_hired, :department
+
+  def initialize(info)
+    @id = info["id"]
+    @name = info["name"]
+    @city = info["city"]
+    @state = info["state"]
+    @avatar = info["avatar"]
+    @birthday = info["birthday"]
+    @date_hired = info["date_hired"]
+    @department = info["department"]
   end
 end

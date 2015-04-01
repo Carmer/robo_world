@@ -1,0 +1,28 @@
+---
+robots:
+- id: 1
+  name: That
+  city: is
+  state: cray
+  avatar: cray
+  birthdate: '2015-03-01'
+  date_hired: '2020-03-04'
+  department: Crazyiness
+  birthday: ''
+- id: 2
+  name: This
+  city: is
+  state: cray
+  avatar: crayasdfadsfadsfadsf asd a sdf
+  birthdate: '2015-03-01'
+  date_hired: '2020-03-04'
+  department: Crazyiness
+- id: 3
+  name: sdfadsfasdfasdfadsf
+  city: is
+  state: cray
+  avatar: crayasdfadsfadsfadsf asd a sdf
+  birthdate: '2015-03-01'
+  date_hired: '2020-03-04'
+  department: Crazyiness
+total: 3

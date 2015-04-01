@@ -1,4 +1,4 @@
-require 'models/robot_master'
+require 'models/robot_manager'
 
 class RoboWorldApp < Sinatra::Base
   set :root, File.join(File.dirname(__FILE__), '..')
@@ -9,7 +9,7 @@ class RoboWorldApp < Sinatra::Base
   end
 
   get '/robots' do
-    @robots = RobotMaster.all
+    @robots = RobotManager.all
     erb :index
   end
 
@@ -18,14 +18,22 @@ class RoboWorldApp < Sinatra::Base
   end
 
   post '/robots' do
-    RobotMaster.create(params[:robot])
+    RobotManager.create(params[:robot])
     redirect '/robots'
   end
 
-  get 'robots/:id' do
-    @robot = RobotMaster.find
+  get '/robots/:id' do |id|
+    @robot = RobotManager.find(id.to_i)
     erb :show_robot
   end
 
-   
+  get '/robots/:id/edit' do |id|
+    @robot = RobotManager.find(id.to_i)
+    erb :edit_robot
+  end
+
+  put '/robots/:id' do |id|
+    RobotManager.update(id.to_i, params[:robot])
+    redirect '/robots'
+  end
 end
