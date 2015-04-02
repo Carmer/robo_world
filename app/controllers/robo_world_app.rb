@@ -1,7 +1,13 @@
+
 class RoboWorldApp < Sinatra::Base
 
   get '/' do
     erb :dashboard
+  end
+
+  post '/robots/rando-bot' do
+    RobotManager.create_random(params[:robots])
+    redirect '/robots'
   end
 
   get '/robots' do

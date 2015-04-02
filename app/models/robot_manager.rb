@@ -1,4 +1,5 @@
 require 'YAML/store'
+require 'faker'
 
 class RobotManager
 
@@ -7,7 +8,40 @@ class RobotManager
       robo_database['robots'] ||= []
       robo_database['total']  ||= 0
       robo_database['total']  += 1
-      robo_database['robots'] << {"id" => robo_database['total'],"name" => robot[:name], "city" => robot[:city], "state" => robot[:state], "avatar" => robot[:avatar], "birthdate" => robot[:dob], "date_hired" => robot[:date_hired], "department" => robot[:department] }
+      robo_database['robots'] << {
+        "id" => robo_database['total'],
+        "name" => robot[:name],
+        "city" => robot[:city],
+        "state" => robot[:state],
+        "avatar" => robot[:avatar],
+        "birthdate" => robot[:dob],
+        "date_hired" => robot[:date_hired],
+        "department" => robot[:department]
+        }
+   end
+ end
+
+  def self.create_random(num = 1)
+    num[:number].to_i.times do
+      random
+    end
+  end
+
+  def self.random
+    robo_database.transaction do
+      robo_database['robots'] ||= []
+      robo_database['total']  ||= 0
+      robo_database['total']  += 1
+      robo_database['robots'] << {
+        "id" => robo_database['total'],
+        "name" => Faker::Name.name,
+        "city" => Faker::Address.city,
+        "state" => Faker::Address.state_abbr,
+        "avatar" => Faker::Lorem.sentence,
+        "dob" => Faker::Date.backward(99),
+        "hired_date" => Faker::Date.backward(12),
+        "department" => Faker::Lorem.sentence
+        }
    end
   end
 
@@ -62,4 +96,5 @@ class RobotManager
       robo_database['total'] = 0
     end
   end
+
 end

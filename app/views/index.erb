@@ -5,6 +5,6 @@
   <a href="/robots/<%= robot.id %>/edit">Edit</a>
   <form action="/robots/<%= robot.id %>" method="POST">
     <input type="hidden" name="_method" value="DELETE">
-    <input type="submit" value="delete <%= robot.name %> permanently"/>
+    <input type="submit" class="btn" name="btn-danger"value="delete <%= robot.name %> permanently"/>
   </form>
 <% end %>
