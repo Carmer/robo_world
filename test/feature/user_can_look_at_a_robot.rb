@@ -1,6 +1,6 @@
 require_relative "../test_helper"
 
-class UserCanDeleteARobotTest < FeatureTest
+class UserCanLookAtARobotTest < FeatureTest
   def create_robot
     RobotManager.create({
       name: "Tortoise",
@@ -13,12 +13,13 @@ class UserCanDeleteARobotTest < FeatureTest
       })
   end
 
-  def test_user_can_delete_a_robot
+  def test_user_look_at_specific_robot
     create_robot
     visit '/'
     click_link_or_button("All Robots Registered with RoboWorld")
-    click_link_or_button("delete Tortoise permanently")
-    refute page.has_content?("Tortoise")
-    assert_equal '/robots', current_path
+    save_and_open_page
+    click_link_or_button("1: Tortoise")
+    assert_equal '/robots/1', current_path
+    assert page.has_content?("Tortoise")
   end
 end
