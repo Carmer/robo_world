@@ -1,12 +1,22 @@
+
 class RoboWorldApp < Sinatra::Base
 
   get '/' do
     erb :dashboard
   end
 
+  post '/robots/rando-bot' do
+    RobotManager.create_random(params[:robots])
+    redirect '/robots'
+  end
+
   get '/robots' do
     @robots = RobotManager.all
     erb :index
+  end
+
+  get '/robots/delete_all' do
+    erb :delete_all
   end
 
   get '/robots/new_robot' do
@@ -35,7 +45,11 @@ class RoboWorldApp < Sinatra::Base
 
   delete '/robots/:id' do |id|
     RobotManager.destroy(id.to_i)
-    redirect '/'
+    redirect '/robots'
   end
 
+  delete '/delete_all' do
+    RobotManager.delete_all
+    redirect '/robots'
+  end
 end

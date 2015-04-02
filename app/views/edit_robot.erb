@@ -1,4 +1,4 @@
-<h1>Edit This Robot</h1>
+<h1>Edit Robot: <%= @robot.name %></h1>
 
 <form action="/robots/<%= @robot.id %>" method="post">
   <p>Edit:</p>
@@ -10,5 +10,5 @@
   <input type="date" name="robot[dob]" value="<%= @robot.birthday %>"><br>
   <input type="date" name="robot[date_hired]" value="<%= @robot.date_hired %>"><br>
   <input type="text" name="robot[department]" value="<%= @robot.department %>"><br>
-  <input type='submit'/>
+  <input type='submit' class="btn" value="submit"/>
 </form>
