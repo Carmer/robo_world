@@ -14,7 +14,7 @@ class RobotManager
         "city" => robot[:city],
         "state" => robot[:state],
         "avatar" => robot[:avatar],
-        "birthdate" => robot[:dob],
+        "dob" => robot[:dob],
         "date_hired" => robot[:date_hired],
         "department" => robot[:department]
         }

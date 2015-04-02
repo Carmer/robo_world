@@ -15,6 +15,10 @@ class RoboWorldApp < Sinatra::Base
     erb :index
   end
 
+  get '/robots/delete_all' do
+    erb :delete_all
+  end
+
   get '/robots/new_robot' do
     erb :new_robot
   end
@@ -44,4 +48,8 @@ class RoboWorldApp < Sinatra::Base
     redirect '/robots'
   end
 
+  delete '/delete_all' do
+    RobotManager.delete_all
+    redirect '/robots'
+  end
 end
