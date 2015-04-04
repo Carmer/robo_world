@@ -1,17 +1,21 @@
 <h1>All Robots in RoboWorld</h1>
 
-<h3>
-  <a href="/">RoboWorld Dashboard</a>
-  <a href="/robots/new_robot">New Robot</a>
-  <a href="/robots/delete_all">Delete All Robots</a>
-</h3>
+  <h3>
+    <a href="/">RoboWorld Dashboard</a>
+    <a href="/robots/new_robot">New Robot</a>
+    <a href="/robots/delete_all">Delete All Robots</a>
+  </h3>
+
 
   <% @robots.each do |robot| %>
-  <h4><a href="/robots/<%= robot.id %>"><img src="https://robohash.org/<%= robot.avatar %>.png"><br><%= robot.id %>: <%= robot.name %></a><br>
+  <div class="robot-pictures">
+
+  <h5><img src="https://robohash.org/<%= robot.avatar %>.png" height='150'><a href="/robots/<%= robot.id %>"><br><%= robot.id %>: <%= robot.name %></a><br>
   <a href="/robots/<%= robot.id %>/edit">Edit</a><br>
   <form action="/robots/<%= robot.id %>" method="POST">
     <input type="hidden" name="_method" value="DELETE">
-    <input type="submit" class="btn" name="btn-danger" value="delete <%= robot.name %> permanently"/>
+    <input type="submit" class="btn btn-warning" name="btn-danger" value="delete robot"/>
   </form>
+  </div>
 <% end %>
-</h4>
+</h5>
