@@ -16,8 +16,9 @@ class UserSeesAllRobotsTest < FeatureTest
   def test_user_can_see_list_of_all_robots
     create_robot
     visit '/'
-    click_link_or_button("All Robots Registered with RoboWorld")
+    click_link_or_button("All Robots")
     assert_equal '/robots', current_path
+    save_and_open_page
     assert page.has_content?("Tortoise")
   end
 end

@@ -6,22 +6,17 @@ require 'sqlite3'
 class RobotManager
 
   def self.create(robot)
+    data = {
+      :name => robot[:name],
+      :city => robot[:city],
+      :state => robot[:state],
+      :avatar => robot[:avatar],
+      :dob =>robot[:dob],
+      :date_hired => robot[:date_hired],
+      :department => robot[:department]
+    }
 
-    robo_database.transaction do
-      robo_database['robots'] ||= []
-      robo_database['total']  ||= 0
-      robo_database['total']  += 1
-      robo_database['robots'] << {
-        "id" => robo_database['total'],
-        "name" => robot[:name],
-        "city" => robot[:city],
-        "state" => robot[:state],
-        "avatar" => robot[:avatar],
-        "dob" => robot[:dob],
-        "date_hired" => robot[:date_hired],
-        "department" => robot[:department]
-        }
-   end
+    robo_database.from(:robots).insert(data)
  end
 
   def self.create_random(num = 1)
@@ -31,25 +26,22 @@ class RobotManager
   end
 
   def self.random
-    robo_database.transaction do
-      robo_database['robots'] ||= []
-      robo_database['total']  ||= 0
-      robo_database['total']  += 1
-      robo_database['robots'] << {
-        "id" => robo_database['total'],
-        "name" => Faker::Name.name,
-        "city" => Faker::Address.city,
-        "state" => Faker::Address.state_abbr,
-        "avatar" => Faker::Lorem.sentence,
-        "dob" => Faker::Date.backward(99),
-        "hired_date" => Faker::Date.backward(12),
-        "department" => Faker::Lorem.sentence
+  data = {
+        :name => Faker::Name.name,
+        :city => Faker::Address.city,
+        :state => Faker::Address.state_abbr,
+        :avatar => Faker::Lorem.sentence,
+        :dob => Faker::Date.backward(99),
+        :date_hired => Faker::Date.backward(12),
+        :department => Faker::Lorem.sentence
         }
-   end
+
+      robo_database.from(:robots).insert(data)
   end
 
   def self.robot_info(id)
-    robots_info.find { |robot| robot["id"] == id }
+    robo_database.from(:robots).where(:id => id).to_a.first
+    # robots_info.find { |robot| robot["id"] == id }
   end
 
   def self.find(id)
@@ -58,46 +50,51 @@ class RobotManager
 
   def self.robo_database
     if ENV["ROBOT_MANAGER_ENV"] == 'test'
-      @robo_database ||= YAML::Store.new("db/robot_manager_test")
+      @robo_database ||= Sequel.sqlite("db/robot_manager_test.sqlite3")
     else
-      @robo_database ||= YAML::Store.new("db/robot_manager")
+      @robo_database ||= Sequel.sqlite("db/robot_manager_development.sqlite3")
     end
   end
 
-  def self.robots_info
-    robo_database.transaction do
-      robo_database['robots'] || []
-    end
-  end
+  # def self.robots_info
+  #   robo_database.transaction do
+  #     robo_database['robots'] || []
+  #   end
+  # end
 
   def self.all
-    robots_info.map { |info| Robot.new(info) }
+    data = robo_database.from(:robots).to_a
+    data.map { |info| Robot.new(info) }
   end
 
   def self.update(id, robot)
-    robo_database.transaction do
-      to_change = robo_database['robots'].find { |robot| robot["id"] == id }
-      to_change["name"] = robot[:name]
-      to_change["city"] = robot[:city]
-      to_change["state"] = robot[:state]
-      to_change["avatar"] = robot[:avatar]
-      to_change["birthday"] = robot[:dob]
-      to_change["date_hired"] = robot[:date_hired]
-      to_change["department"] =  robot[:department]
-    end
+    robo_database.from(:robots).where(:id => id).update(
+    :name => robot[:name],
+    :city => robot[:city],
+    :state => robot[:state],
+    :avatar => robot[:avatar],
+    :dob => robot[:dob],
+    :date_hired => robot[:date_hired],
+    :department => robot[:department]
+    )
+    # robo_database.transaction do
+    #   to_change = robo_database['robots'].find { |robot| robot["id"] == id }
+    #   to_change["name"] = robot[:name]
+    #   to_change["city"] = robot[:city]
+    #   to_change["state"] = robot[:state]
+    #   to_change["avatar"] = robot[:avatar]
+    #   to_change["birthday"] = robot[:dob]
+    #   to_change["date_hired"] = robot[:date_hired]
+    #   to_change["department"] =  robot[:department]
+    # end
   end
 
   def self.destroy(id)
-    robo_database.transaction do
-      target = robo_database['robots'].delete_if { |robot| robot["id"] == id }
-    end
+    robo_database.from(:robots).where(:id => id).delete
   end
 
   def self.delete_all
-    robo_database.transaction do
-      robo_database['robots'] = []
-      robo_database['total'] = 0
-    end
+    robo_database.from(:robots).delete
   end
 
 end

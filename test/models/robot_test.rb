@@ -1,6 +1,6 @@
 require_relative '../test_helper'
 
-class RobotTest < ModelTest
+class RobotTest < Minitest::Test
 
   def create_robots(num)
     num.times do |x|
