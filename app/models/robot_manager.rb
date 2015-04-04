@@ -1,9 +1,12 @@
 require 'YAML/store'
 require 'faker'
+require 'sequel'
+require 'sqlite3'
 
 class RobotManager
 
   def self.create(robot)
+
     robo_database.transaction do
       robo_database['robots'] ||= []
       robo_database['total']  ||= 0
