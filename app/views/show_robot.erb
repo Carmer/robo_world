@@ -2,6 +2,6 @@
 
 <h1>This is <%= @robot.name %>, the robot</h1>
 
-<img src="https://robohash.org/<%= @robot.avatar %>.png"/>
+<img class="robot-solo-pic" src="https://robohash.org/<%= @robot.avatar %>.png"/>
 
-<p><%= @robot.name %> is from <%= @robot.city %>, <%= @robot.state %>.</p>
+<p class="robot-solo-pic"><%= @robot.name %> is from <%= @robot.city %>, <%= @robot.state %>. <%= @robot.name %> was born on <%= @robot.birthday %>. </p>

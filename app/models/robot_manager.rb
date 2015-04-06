@@ -13,9 +13,9 @@ class RobotManager
       :avatar => robot[:avatar],
       :dob =>robot[:dob],
       :date_hired => robot[:date_hired],
-      :department => robot[:department]
+      :department => robot[:department],
+      :salary => robot[:salary].to_i
     }
-
     robo_database.from(:robots).insert(data)
  end
 
@@ -31,9 +31,10 @@ class RobotManager
         :city => Faker::Address.city,
         :state => Faker::Address.state_abbr,
         :avatar => Faker::Lorem.sentence,
-        :dob => Faker::Date.backward(99),
-        :date_hired => Faker::Date.backward(12),
-        :department => Faker::Lorem.sentence
+        :dob => Faker::Date.backward(365 * 10),
+        :date_hired => Faker::Date.backward(365 * 5),
+        :department => Faker::Lorem.sentence,
+        :salary => Faker::Number.number(5)
         }
 
       robo_database.from(:robots).insert(data)
@@ -95,6 +96,19 @@ class RobotManager
 
   def self.delete_all
     robo_database.from(:robots).delete
+  end
+
+  def self.average_salary
+    robo_database.from(:robots).avg(:salary).to_i
+  end
+
+  def self.average_age
+    avg = Time.now.year - robo_database.from(:robots).avg(:dob)
+    avg.to_i
+  end
+
+  def self.each_year
+    robo_database.from(:robots).group_by(:date_hired).to_a
   end
 
 end

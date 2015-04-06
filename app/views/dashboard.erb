@@ -8,3 +8,21 @@
 
 </h3>
 </div>
+
+<table style="width:100%">
+<tr>
+  <th>Total Robots</th>
+  <th>Average Age</th>
+  <th>Average Salary</th>
+</tr>
+<tr>
+  <td><%= @robots.count %></td>
+  <td><%= @average_age %></td>
+  <td>$<%= @average_salary %></td>
+</tr>
+</table>
+
+<% @each_year.each do |x| %>
+
+<p><%= x[:date_hired] %> </p>
+<% end %>

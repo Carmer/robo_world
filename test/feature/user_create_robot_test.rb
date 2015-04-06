@@ -12,6 +12,7 @@ class UserCreateRobotTest < FeatureTest
     fill_in("robot[dob]", with: "07/03/1987")
     fill_in("robot[date_hired]", with: "09/10/2012")
     fill_in("robot[department]", with: "GRRRR8")
+    fill_in("robot[salary]", with: "44458")
     click_link_or_button("Create Robot")
     assert_equal "/robots", current_path
     assert page.has_content?("Tortoise")

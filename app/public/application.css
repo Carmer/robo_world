@@ -48,6 +48,7 @@ footer {
 }
 
 .container h4 {
+  color: rgb(245, 136, 136);
   text-align: center;
 }
 
@@ -83,4 +84,10 @@ footer {
   float: left;
   width: 175px;
   text-align: center;
+}
+
+
+
+.robot-solo-pic {
+  float: right;
 }
