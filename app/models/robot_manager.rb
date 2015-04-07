@@ -13,9 +13,9 @@ class RobotManager
       :avatar => robot[:avatar],
       :dob =>robot[:dob],
       :date_hired => robot[:date_hired],
-      :department => robot[:department]
+      :department => robot[:department],
+      :salary => robot[:salary].to_i
     }
-
     robo_database.from(:robots).insert(data)
  end
 
@@ -31,9 +31,10 @@ class RobotManager
         :city => Faker::Address.city,
         :state => Faker::Address.state_abbr,
         :avatar => Faker::Lorem.sentence,
-        :dob => Faker::Date.backward(99),
-        :date_hired => Faker::Date.backward(12),
-        :department => Faker::Lorem.sentence
+        :dob => Faker::Date.backward(365 * 10),
+        :date_hired => Faker::Date.backward(365 * 5),
+        :department => Faker::Lorem.sentence,
+        :salary => Faker::Number.number(5)
         }
 
       robo_database.from(:robots).insert(data)
@@ -41,7 +42,6 @@ class RobotManager
 
   def self.robot_info(id)
     robo_database.from(:robots).where(:id => id).to_a.first
-    # robots_info.find { |robot| robot["id"] == id }
   end
 
   def self.find(id)
@@ -55,12 +55,6 @@ class RobotManager
       @robo_database ||= Sequel.sqlite("db/robot_manager_development.sqlite3")
     end
   end
-
-  # def self.robots_info
-  #   robo_database.transaction do
-  #     robo_database['robots'] || []
-  #   end
-  # end
 
   def self.all
     data = robo_database.from(:robots).to_a
@@ -77,16 +71,6 @@ class RobotManager
     :date_hired => robot[:date_hired],
     :department => robot[:department]
     )
-    # robo_database.transaction do
-    #   to_change = robo_database['robots'].find { |robot| robot["id"] == id }
-    #   to_change["name"] = robot[:name]
-    #   to_change["city"] = robot[:city]
-    #   to_change["state"] = robot[:state]
-    #   to_change["avatar"] = robot[:avatar]
-    #   to_change["birthday"] = robot[:dob]
-    #   to_change["date_hired"] = robot[:date_hired]
-    #   to_change["department"] =  robot[:department]
-    # end
   end
 
   def self.destroy(id)
@@ -95,6 +79,19 @@ class RobotManager
 
   def self.delete_all
     robo_database.from(:robots).delete
+  end
+
+  def self.average_salary
+    robo_database.from(:robots).avg(:salary).to_i
+  end
+
+  def self.average_age
+    avg = Time.now.year - robo_database.from(:robots).avg(:dob)
+    avg.to_i
+  end
+
+  def self.each_year
+    robo_database.from(:robots).group_by(:date_hired).to_a
   end
 
 end

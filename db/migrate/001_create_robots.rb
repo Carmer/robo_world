@@ -12,5 +12,7 @@ environments.each do |env|
     String      :dob
     String      :date_hired
     String      :department
+    Integer     :salary
+    
   end
 end

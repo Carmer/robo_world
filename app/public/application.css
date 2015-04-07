@@ -3,6 +3,7 @@ body {
 }
 
 #logo{
+  border: 10px solid white;
   border-radius: 100px;
   display: block;
   margin-top: 27px;
@@ -10,9 +11,9 @@ body {
   margin-right: auto;
 }
 
-#logo:hover{
+/*#logo:hover{
   box-shadow: 10px 10px 5px rgb(255, 211, 109);
-}
+}*/
 
 .container {
   margin-top: 50px;
@@ -48,6 +49,7 @@ footer {
 }
 
 .container h4 {
+  color: rgb(245, 136, 136);
   text-align: center;
 }
 
@@ -83,4 +85,10 @@ footer {
   float: left;
   width: 175px;
   text-align: center;
+}
+
+
+
+.robot-solo-pic {
+  float: right;
 }

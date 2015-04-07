@@ -2,6 +2,10 @@
 class RoboWorldApp < Sinatra::Base
 
   get '/' do
+    @robots = RobotManager.all
+    @average_salary = RobotManager.average_salary
+    @average_age = RobotManager.average_age
+    @each_year = RobotManager.each_year
     erb :dashboard
   end
 
